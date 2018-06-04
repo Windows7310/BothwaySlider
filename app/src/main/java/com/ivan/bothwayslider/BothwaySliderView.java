@@ -100,7 +100,7 @@ public class BothwaySliderView extends View {
         }
         mLowBlockBg = ta.getDrawable(R.styleable.BothwaySliderView_lowBtnDrawable);
         if (mLowBlockBg == null) {
-            mLowBlockBg = getResources().getDrawable(R.drawable.seekbarpressure_thumb_ed, null);
+            mLowBlockBg = getResources().getDrawable(R.drawable.seekbarpressure_thumb, null);
         }
         int textColor = ta.getColor(R.styleable.BothwaySliderView_textColor, Color.RED);
         mTextPaint.setColor(textColor);
