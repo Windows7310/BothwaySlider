@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="BothwaySliderView">
-        <attr name="backgroundDrawable" format="reference" />
-        <attr name="frontDrawable" format="reference" />
+        <attr name="backProColor" format="color|reference" />
+        <attr name="frontProColor" format="color|reference" />
         <attr name="highBtnDrawable" format="reference" />
         <attr name="lowBtnDrawable" format="reference" />
         <attr name="textColor" format="color|reference" />

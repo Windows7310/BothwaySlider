@@ -8,7 +8,6 @@ import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.icu.math.BigDecimal;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -28,13 +27,14 @@ public class BothwaySliderView extends View {
     private static final int CLICK_OUT_AREA = 5;
     private static final int CLICK_INVALID = 0;
 
-    private Drawable mFrontScrollBarBg;
-    private Drawable mBackScrollBarBg;
     private Drawable mLowBlockBg;
     private Drawable mHighBlockBg;
 
+    private Paint mFrontPaint;
+    private Paint mBackPaint;
+
     private int mScrollBarWidth;
-    private int mScrollBarHeight;
+    private int mScrollBarHeight = 20;
     private int mBlockDiameter;//滑块直径
     private int mBlockRadius;//滑块半径
     private double mOffsetLow = 0;
@@ -73,27 +73,33 @@ public class BothwaySliderView extends View {
         mTextPaint.setTextAlign(Paint.Align.CENTER);
         mTextPaint.setTextSize(40);
 
+        mFrontPaint = new Paint();
+        mFrontPaint.setColor(Color.RED);
+        mFrontPaint.setStyle(Paint.Style.FILL);
+
+        mBackPaint = new Paint();
+        mBackPaint.setColor(Color.GRAY);
+        mBackPaint.setStyle(Paint.Style.FILL);
+
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.BothwaySliderView);
         initDrawable(ta);
 
         mHighBlockBg.setState(STATE_NORMAL);
         mLowBlockBg.setState(STATE_NORMAL);
 
-        mScrollBarHeight = mBackScrollBarBg.getIntrinsicHeight();
+        mScrollBarHeight = 10;
         mBlockDiameter = mLowBlockBg.getIntrinsicWidth();
         mBlockRadius = mBlockDiameter / 2;
         ta.recycle();
     }
 
     private void initDrawable(TypedArray ta) {
-        mBackScrollBarBg = ta.getDrawable(R.styleable.BothwaySliderView_backgroundDrawable);
-        if (mBackScrollBarBg == null) {
-            mBackScrollBarBg = getResources().getDrawable(R.drawable.seekbarpressure_bg_progress, null);
-        }
-        mFrontScrollBarBg = ta.getDrawable(R.styleable.BothwaySliderView_frontDrawable);
-        if (mFrontScrollBarBg == null) {
-            mFrontScrollBarBg = getResources().getDrawable(R.drawable.seekbarpressure_bg_normal, null);
-        }
+        int backProColor = ta.getColor(R.styleable.BothwaySliderView_backProColor, Color.GRAY);
+        mBackPaint.setColor(backProColor);
+
+        int frontProColor = ta.getColor(R.styleable.BothwaySliderView_frontProColor, Color.RED);
+        mFrontPaint.setColor(frontProColor);
+
         mHighBlockBg = ta.getDrawable(R.styleable.BothwaySliderView_highBtnDrawable);
         if (mHighBlockBg == null) {
             mHighBlockBg = getResources().getDrawable(R.drawable.seekbarpressure_thumb, null);
@@ -129,11 +135,15 @@ public class BothwaySliderView extends View {
         int top = mBlockPaddingTop + mBlockRadius - mScrollBarHeight / 2;
         int bottom = top + mScrollBarHeight;
 
-        mBackScrollBarBg.setBounds(mBlockRadius, top, mScrollBarWidth - mBlockRadius, bottom);
-        mBackScrollBarBg.draw(canvas);
+//        mBackScrollBarBg.setBounds(mBlockRadius, top, mScrollBarWidth - mBlockRadius, bottom);
+//        mBackScrollBarBg.draw(canvas);
 
-        mFrontScrollBarBg.setBounds((int) mOffsetLow, top, (int) mOffsetHigh, bottom);
-        mFrontScrollBarBg.draw(canvas);
+//        mFrontScrollBarBg.setBounds((int) mOffsetLow, top, (int) mOffsetHigh, bottom);
+//        mFrontScrollBarBg.draw(canvas);
+
+        canvas.drawRect(mBlockRadius, top, mScrollBarWidth - mBlockRadius, bottom, mBackPaint);
+
+        canvas.drawRect((int) mOffsetLow, top, (int) mOffsetHigh, bottom, mFrontPaint);
 
         mLowBlockBg.setBounds((int) (mOffsetLow - mBlockRadius), mBlockPaddingTop, (int) (mOffsetLow + mBlockRadius), mBlockDiameter + mBlockPaddingTop);
         mLowBlockBg.draw(canvas);
@@ -274,5 +284,13 @@ public class BothwaySliderView extends View {
 
     public void setHighValue(int value) {
         mDefaultScreenHigh = value;
+    }
+
+    public void setLowBlockBg(int value) {
+        mLowBlockBg = getResources().getDrawable(value, null);
+    }
+
+    public void setHighBlockBg(int value) {
+        mHighBlockBg = getResources().getDrawable(value, null);
     }
 }

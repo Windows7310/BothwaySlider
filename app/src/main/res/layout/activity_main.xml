@@ -11,6 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="30dp"
         app:lowBtnDrawable="@mipmap/ic_launcher_round"
+        app:frontProColor="#00ff00"
+        app:backProColor="#f0ff0f"
         app:textColor="#000000"/>
     
 </FrameLayout>
