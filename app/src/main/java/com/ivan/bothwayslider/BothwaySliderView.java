@@ -11,6 +11,8 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
+import static com.ivan.bothwayslider.R.attr.backProColor;
+
 /**
  * @author: yifan.lin
  * @description:
@@ -292,5 +294,13 @@ public class BothwaySliderView extends View {
 
     public void setHighBlockBg(int value) {
         mHighBlockBg = getResources().getDrawable(value, null);
+    }
+
+    public void setFrontProColor(int colorId) {
+        mFrontPaint.setColor(colorId);
+    }
+
+    public void setBackProColor(int colorId) {
+        mBackPaint.setColor(colorId);
     }
 }

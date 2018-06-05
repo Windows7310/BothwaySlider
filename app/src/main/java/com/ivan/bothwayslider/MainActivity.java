@@ -16,6 +16,7 @@ public class MainActivity extends AppCompatActivity {
         mView.setMaxValue(100);
         mView.setLowValue(-80);
         mView.setHighValue(0);
+        mView.setBackProColor(getResources().getColor(R.color.colorPrimary));
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {// 4.0 需打开硬件加速
 //            getWindow().setFlags(0x1000000, 0x1000000);
 //        }
